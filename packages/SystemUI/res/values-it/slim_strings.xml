@@ -163,4 +163,17 @@
     <string name="status_bar_notification_heads_up_disable_title">Disattiva heads up</string>
     <string name="heads_up_snooze_message">Le heads up sono disattivate per <xliff:g id="number">%d</xliff:g> minuti.</string>
 
+    <!-- Network Stat -->
+    <string name="time_0_5_seconds">.5 secondi</string>
+    <string name="time_1_second">1 secondo</string>
+    <string name="time_2_seconds">2 secondi</string>
+    <string name="time_5_seconds">5 secondi</string>
+    <string name="status_bar_network_title">Traffico di rete</string>
+    <string name="status_bar_show_network_stats_title">Mostra indicatori rete</string>
+    <string name="status_bar_show_network_stats_summary">Mostra la velocità di rete nella barra di stato</string>
+    <string name="status_bar_network_stats_update_title">Frequenza aggiornamento</string>
+    <string name="status_bar_network_stats_update_summary">Quanto spesso i valori vengono aggiornati</string>
+    <string name="status_bar_network_stats_color_title">Colore testo indicatori</string>
+    <string name="status_bar_network_stats_color_summary">Modifica il colore del testo degli indicatori nella barra di stato</string>
+
 </resources>
