@@ -1,4 +1,5 @@
 // Copyright 2012 Google Inc. All Rights Reserved.
+// This code has been modified. Portions copyright (C) 2013, ParanoidAndroid Project.
 
 package com.android.server.wm;
 
