@@ -126,6 +126,9 @@
     <uses-permission android:name="android.permission.REBOOT" />
     <uses-permission android:name="android.permission.RECOVERY" />
 
+    <!-- Kill app permission -->
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
@@ -218,6 +221,21 @@
                   android:theme="@style/config_recents_activity_theme">
             <intent-filter>
                 <action android:name="com.android.systemui.recents.TOGGLE_RECENTS" />
+            </intent-filter>
+        </activity>
+
+        <!-- Screenshot Activity -->
+        <activity
+            android:name="com.android.systemui.shortcuts.Screenshot"
+            android:label="@string/shortcut_screenshot"
+            android:icon="@drawable/ic_sysbar_screenshot"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.android.systemui.SHORTCUT" />
+                <category android:name="com.android.systemui.SHORTCUT_EXTRA" />
             </intent-filter>
         </activity>
 
