@@ -3772,6 +3772,13 @@ public final class Settings {
                 "lockscreen_notifications_wake_on_notification";
 
         /**
+         * Privacy Mode Option
+         * @hide
+         */
+        public static final String LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE =
+                "lockscreen_notifications_privacy_mode";
+
+        /**
          * Sets the count of notifications shown at once
          * @hide
          */
