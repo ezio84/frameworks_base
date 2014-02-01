@@ -620,6 +620,8 @@ public abstract class BaseStatusBar extends SystemUI implements
                 newMask, lock ? 1 : 0, null).sendToTarget();
     }
 
+    public void setButtonDrawable(int buttonId, int iconId) {}
+
     protected abstract WindowManager.LayoutParams getSearchLayoutParams(
             LayoutParams layoutParams);
 
