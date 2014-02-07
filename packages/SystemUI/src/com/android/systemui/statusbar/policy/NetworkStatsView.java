@@ -28,6 +28,7 @@ import android.net.TrafficStats;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -43,6 +44,8 @@ public class NetworkStatsView extends LinearLayout {
     // state variables
     private boolean mAttached;      // whether or not attached to a window
     private boolean mActivated;     // whether or not activated due to system settings
+    private boolean mScreenOn;
+    private boolean mNetworkAvailable;
 
     private TextView mTextViewTx;
     private TextView mTextViewRx;
@@ -105,19 +108,8 @@ public class NetworkStatsView extends LinearLayout {
 
         @Override
         public void onChange(boolean selfChange) {
-            // check for connectivity
-            ConnectivityManager cm =
-                    (ConnectivityManager)getContext().getSystemService(
-                            Context.CONNECTIVITY_SERVICE);
-
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            boolean networkAvailable = activeNetwork != null ? activeNetwork.isConnected() : false;
-
-            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-            boolean isScreenOn = pm.isScreenOn();
-
             mActivated = (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.STATUS_BAR_NETWORK_STATS, 0)) == 1 && networkAvailable;
+                    Settings.System.STATUS_BAR_NETWORK_STATS, 0)) == 1;
 
             mRefreshInterval = Settings.System.getLong(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL, 500);
@@ -132,10 +124,12 @@ public class NetworkStatsView extends LinearLayout {
                 if (mTextViewRx != null) mTextViewRx.setTextColor(mNetStatsColor);
             }
 
-            setVisibility(mActivated ? View.VISIBLE : View.GONE);
-
-            if (mActivated && mAttached && isScreenOn) {
+            mNetworkAvailable = isNetworkAvailable();
+            if (mActivated && mAttached && mNetworkAvailable) {
+                setVisibility(View.VISIBLE);
                 updateStats();
+            } else {
+                setVisibility(View.GONE);
             }
         }
     }
@@ -144,7 +138,30 @@ public class NetworkStatsView extends LinearLayout {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            mSettingsObserver.onChange(true);
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                mScreenOn = true;
+                if (mActivated && mAttached && mNetworkAvailable) {
+                    setVisibility(View.VISIBLE);
+                    updateStats();
+                }
+            }
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                mScreenOn = false;
+                if (mActivated && mAttached) {
+                    setVisibility(View.GONE);
+                }
+            }
+            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                if (mActivated && mAttached && mScreenOn) {
+                    mNetworkAvailable = isNetworkAvailable();
+                    if (mNetworkAvailable) {
+                        setVisibility(View.VISIBLE);
+                        updateStats();
+                    } else {
+                        setVisibility(View.GONE);
+                    }
+                }
+            }
         }
     };
 
@@ -161,7 +178,7 @@ public class NetworkStatsView extends LinearLayout {
         if (!mAttached) {
             mAttached = true;
             mNetStatsColor = mTextViewTx.getTextColors().getDefaultColor();
-            mHandler.postDelayed(mUpdateRunnable, mRefreshInterval);
+            mScreenOn = isScreenOn();
         }
 
         // register the broadcast receiver
@@ -189,8 +206,20 @@ public class NetworkStatsView extends LinearLayout {
         mSettingsObserver.unobserver();
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(
+                                Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null ? activeNetwork.isConnected() : false;
+    }
+
+    private boolean isScreenOn() {
+        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        return pm.isScreenOn();
+    }
+
     private void updateStats() {
-        if (!mActivated || !mAttached) {
+        if (!mActivated || !mAttached || !mScreenOn || !mNetworkAvailable) {
             mHandler.removeCallbacks(mUpdateRunnable);
             return;
         }
@@ -219,30 +248,10 @@ public class NetworkStatsView extends LinearLayout {
 
     private void setTextViewSpeed(TextView tv, long speed, float deltaT) {
         long lSpeed = Math.round(speed / deltaT);
-
-        tv.setText(formatTraffic(lSpeed));
-    }
-
-    private String formatTraffic(long number) {
-        float result = number;
-        int suffix = com.android.internal.R.string.byteShort;
-        if (result >= 1024) {
-            suffix = com.android.internal.R.string.kilobyteShort;
-            result = result / 1024;
-        }
-        if (result >= 1024) {
-            suffix = com.android.internal.R.string.megabyteShort;
-            result = result / 1024;
-        }
-        String value;
-        // if we just have bytes show no decimal places
-        if (number < 1024) {
-            value = String.format("%.0f", result);
+        if (lSpeed > 900) {
+            tv.setText(Formatter.formatFileSize(mContext, lSpeed));
         } else {
-            value = String.format("%.1f", result);
+            tv.setText("");
         }
-        return mContext.getResources().
-            getString(com.android.internal.R.string.fileSizeSuffix,
-                      value, mContext.getString(suffix));
     }
 }
