@@ -121,6 +121,7 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
     private int mCurrentOverlayStyle = -1;
     private Drawable defaultBackground;
     private int mPanelColor;
+    private int mCustomTimeoutDelay = TIMEOUT_DELAY;
 
     // True if we want to play tones on the system stream when the master stream is specified.
     private final boolean mPlayMasterStreamTones;
@@ -240,6 +241,8 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
                     UserHandle.USER_CURRENT);
             changeOverlayStyle(overlayStyle);
             setColor();
+            mCustomTimeoutDelay = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.VOLUME_PANEL_TIMEOUT, TIMEOUT_DELAY);
         }
     };
 
@@ -366,6 +369,10 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         context.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.VOLUME_PANEL_BG_COLOR), false,
                 mSettingsObserver, UserHandle.USER_ALL);
+        context.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.VOLUME_PANEL_TIMEOUT), false,
+                mSettingsObserver, UserHandle.USER_ALL);
+
         boolean masterVolumeKeySounds = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_useVolumeKeySounds);
 
@@ -374,6 +381,9 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
         mMoreButton.setOnClickListener(this);
         listenToRingerMode();
         setColor();
+
+        mCustomTimeoutDelay = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.VOLUME_PANEL_TIMEOUT, TIMEOUT_DELAY);
     }
 
     private void changeOverlayStyle(int newStyle) {
@@ -1160,7 +1170,14 @@ public class VolumePanel extends Handler implements OnSeekBarChangeListener, Vie
 
     private void resetTimeout() {
         removeMessages(MSG_TIMEOUT);
-        sendMessageDelayed(obtainMessage(MSG_TIMEOUT), TIMEOUT_DELAY);
+        if (isExpanded()) {
+            // If expanded volume panel, use default timeout (3000ms)
+            // This assumes that if user is viewing expanded volume panel,
+            // they will need time to adjust individual sliders.
+            sendMessageDelayed(obtainMessage(MSG_TIMEOUT), TIMEOUT_DELAY);
+        } else {
+            sendMessageDelayed(obtainMessage(MSG_TIMEOUT), mCustomTimeoutDelay);
+        }
     }
 
     private void forceTimeout() {
