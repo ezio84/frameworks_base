@@ -153,9 +153,46 @@
     <string name="accessibility_ime_navigation_left">Cursor izquierda</string>
     <string name="accessibility_ime_navigation_right">Cursor derecha</string>
 
+
     <!-- Heads up -->
     <string name="status_bar_notification_heads_up_enable_title">Habilitar "heads up"</string>
     <string name="status_bar_notification_heads_up_disable_title">Deshabilitar "heads up"</string>
     <string name="heads_up_snooze_message">Heads up deshabilitado durante <xliff:g id="number">%d</xliff:g> minutos.</string>
+
+
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go activado</string>
+    <string name="onthego_notif_title">On-The-Go está activo</string>
+    <string name="onthego_notif_stop">Parar</string>
+    <string name="onthego_notif_options">Opciones</string>
+    <string name="onthego_notif_error">No se puede iniciar On-The-Go</string>
+    <string name="onthego_notif_restart">Reiniciar On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Modo de cámara cambiado</string>
+    <string name="onthego_transparency">Transparencia</string>
+    <string name="onthego_front_camera">Usar cámara frontal</string>
+    <string name="onthego_service_toggle">Reiniciar servicio automáticamente</string>
+
+    <!-- Development shortcut -->
+    <string name="advanced_dev_option_wipe_app">Eliminar datos de aplicación</string>
+    <string name="advanced_dev_option_force_stop">Detener</string>
+
+    <!-- Hide notification icons -->
+    <string name="status_bar_notification_hide_icon_packages">Esconder ícono de aplicación</string>
+
+    <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_halo">Crear notificación halo.</string>
+
+    <!-- HALO -->
+    <string name="halo_dismiss">Borrar notificación</string>
+    <string name="halo_hide">Esconder</string>
+    <string name="halo_clear_all">Borrar todas las notificaciones</string>
+    <string name="halo_silence">Esconder &amp; silenciar hasta despertar</string>
+    <string name="halo_tutorial1">Esto es HALO</string>
+    <string name="halo_tutorial2">Muéveme: doble toque &amp; arrastra</string>
+    <string name="halo_tutorial3">Buscar tareas: arrastrado horizontal</string>
+
+    <!-- Title shown in notification popup for launching notification in floating mode -->
+    <string name="status_bar_notification_floating_item_title">Modo flotante</string>
+
 
 </resources>
