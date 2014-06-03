@@ -158,6 +158,7 @@
     <!-- Navigation bar IME navigation -->
     <string name="accessibility_ime_navigation_left">Cursor left</string>
     <string name="accessibility_ime_navigation_right">Cursor right</string>
+<<<<<<< HEAD
 
 
     <!-- Heads up -->
@@ -225,9 +226,14 @@
     <string name="halo_tutorial1">This is HALO</string>
     <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
     <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
+=======
+>>>>>>> 93b53b0... FW:Notifications Cleanup need with previous FW notif original commit
 
     <!-- Title shown in notification popup for launching notification in floating mode -->
     <string name="status_bar_notification_floating_item_title">Floating mode</string>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 93b53b0... FW:Notifications Cleanup need with previous FW notif original commit
 </resources>
