@@ -21,12 +21,15 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.TaskStackBuilder;
+import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.IPackageDataObserver;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
@@ -84,8 +87,9 @@ public class RecentPanelView {
     private static final int EXPANDED_MODE_NEVER  = 2;
 
     private static final int MENU_APP_DETAILS_ID   = 0;
-    private static final int MENU_APP_PLAYSTORE_ID = 1;
-    private static final int MENU_APP_AMAZON_ID    = 2;
+    private static final int MENU_APP_FLOATING_ID  = 1;
+    private static final int MENU_APP_PLAYSTORE_ID = 2;
+    private static final int MENU_APP_AMAZON_ID    = 3;
 
     private static final String PLAYSTORE_REFERENCE = "com.android.vending";
     private static final String AMAZON_REFERENCE    = "com.amazon.venezia";
@@ -190,7 +194,7 @@ public class RecentPanelView {
             public boolean onLongClick(Card card, View view) {
                 constructMenu(
                         (ImageButton) view.findViewById(R.id.card_header_button_expand),
-                        td.packageName);
+                        td);
                 return true;
             }
         });
@@ -279,7 +283,7 @@ public class RecentPanelView {
     /**
      * Construct popup menu for longpress.
      */
-    private void constructMenu(final View selectedView, final String packageName) {
+    private void constructMenu(final View selectedView, final TaskDescription td) {
         if (selectedView == null) {
             return;
         }
@@ -296,12 +300,14 @@ public class RecentPanelView {
         // Add app detail menu entry.
         popup.getMenu().add(0, MENU_APP_DETAILS_ID, 0,
                 mContext.getResources().getString(R.string.status_bar_recent_inspect_item_title));
+        popup.getMenu().add(0, MENU_APP_FLOATING_ID, 0,
+                mContext.getResources().getString(R.string.status_bar_notification_floating_item_title));
 
         // Add playstore or amazon entry if it is provided by the application.
-        if (checkAppInstaller(packageName, PLAYSTORE_REFERENCE)) {
+        if (checkAppInstaller(td.packageName, PLAYSTORE_REFERENCE)) {
             popup.getMenu().add(0, MENU_APP_PLAYSTORE_ID, 0,
                     getApplicationLabel(PLAYSTORE_REFERENCE));
-        } else if (checkAppInstaller(packageName, AMAZON_REFERENCE)) {
+       } else if (checkAppInstaller(td.packageName, AMAZON_REFERENCE)) {
             popup.getMenu().add(0, MENU_APP_AMAZON_ID, 0,
                     getApplicationLabel(AMAZON_REFERENCE));
         }
@@ -310,13 +316,21 @@ public class RecentPanelView {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == MENU_APP_DETAILS_ID) {
-                    startApplicationDetailsActivity(packageName, null, null);
+                     startApplicationDetailsActivity(td.packageName, null, null);
+                  } else if (item.getItemId() == MENU_APP_FLOATING_ID) {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            | Intent.FLAG_FLOATING_WINDOW);
+                    intent.setComponent(td.intent.getComponent());
+                    mContext.startActivity(intent);
+                    exit();
                 } else if (item.getItemId() == MENU_APP_PLAYSTORE_ID) {
                     startApplicationDetailsActivity(null,
-                            PLAYSTORE_APP_URI_QUERY + packageName, PLAYSTORE_REFERENCE);
+                           PLAYSTORE_APP_URI_QUERY + td.packageName, PLAYSTORE_REFERENCE);
                 } else if (item.getItemId() == MENU_APP_AMAZON_ID) {
                     startApplicationDetailsActivity(null,
-                            AMAZON_APP_URI_QUERY + packageName, AMAZON_REFERENCE);
+                           AMAZON_APP_URI_QUERY + td.packageName, AMAZON_REFERENCE);
                 }
                 return true;
             }
