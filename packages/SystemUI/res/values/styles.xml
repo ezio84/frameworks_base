@@ -223,6 +223,7 @@
 
     <style name="RecentBaseStyle"  parent="@*android:style/Theme.Holo.Light">
         <item name="android:popupMenuStyle">@*android:style/Widget.Holo.Light.ListPopupWindow</item>
+    </style>
 
     <!-- Network Stats -->
     <style name="TextAppearance.StatusBar.NetworkStats"
