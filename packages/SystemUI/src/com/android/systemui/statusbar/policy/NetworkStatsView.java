@@ -32,6 +32,7 @@ import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.android.systemui.R;
 
@@ -46,9 +47,12 @@ public class NetworkStatsView extends LinearLayout {
     private boolean mActivated;     // whether or not activated due to system settings
     private boolean mScreenOn;
     private boolean mNetworkAvailable;
+    private boolean mShowArrow;
 
     private TextView mTextViewTx;
     private TextView mTextViewRx;
+    private ImageView mImageViewTx;
+    private ImageView mImageViewRx;
     private long mLastTx;
     private long mLastRx;
     private long mRefreshInterval;
@@ -96,6 +100,8 @@ public class NetworkStatsView extends LinearLayout {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_NETWORK_STATS), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_NETWORK_STATS_SHOW_ARROW), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_NETWORK_STATS_TEXT_COLOR), false, this);
@@ -113,6 +119,17 @@ public class NetworkStatsView extends LinearLayout {
 
             mRefreshInterval = Settings.System.getLong(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_NETWORK_STATS_UPDATE_INTERVAL, 500);
+
+            mShowArrow = (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.STATUS_BAR_NETWORK_STATS_SHOW_ARROW, 1)) == 1;
+
+            if (mShowArrow) {
+                mImageViewRx.setVisibility(View.VISIBLE);
+                mImageViewTx.setVisibility(View.VISIBLE);
+            } else {
+                mImageViewRx.setVisibility(View.GONE);
+                mImageViewTx.setVisibility(View.GONE);
+            }
 
             int newColor = 0;
             ContentResolver resolver = getContext().getContentResolver();
@@ -170,6 +187,8 @@ public class NetworkStatsView extends LinearLayout {
         super.onFinishInflate();
         mTextViewTx = (TextView) findViewById(R.id.bytes_tx);
         mTextViewRx = (TextView) findViewById(R.id.bytes_rx);
+        mImageViewTx = (ImageView) findViewById(R.id.img_tx);
+        mImageViewRx = (ImageView) findViewById(R.id.img_rx);
     }
 
     @Override

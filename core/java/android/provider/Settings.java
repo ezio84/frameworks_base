@@ -3903,6 +3903,13 @@ public final class Settings {
         public static final String STATUS_BAR_NETWORK_STATS_TEXT_COLOR = "status_bar_network_stats_text_color";
 
         /**
+         * statusbar network stats show arrow icons
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_NETWORK_STATS_SHOW_ARROW = "status_bar_network_stats_show_arrow";
+
+        /**
          * Whether custom hardware key rebinding is enabled
          * @hide
          */
