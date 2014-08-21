@@ -78,7 +78,6 @@ public class NotificationViewManager {
         public boolean hideNonClearable = false;
         public boolean dismissAll = true;
         public boolean wakeOnNotification = false;
-        public boolean privacyMode = true;
         public int notificationsHeight = 4;
         public float offsetTop = 0.3f;
         public int notificationColor = 0x55555555;
@@ -94,8 +93,6 @@ public class NotificationViewManager {
                     Settings.System.POCKET_MODE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_NOTIFICATIONS_WAKE_ON_NOTIFICATION), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_NOTIFICATIONS_HEIGHT), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -130,11 +127,6 @@ public class NotificationViewManager {
             wakeOnNotification = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_NOTIFICATIONS_WAKE_ON_NOTIFICATION,
                     wakeOnNotification ? 1 : 0, UserHandle.USER_CURRENT) == 1;
-
-            privacyMode = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE,
-                    privacyMode ? 1 : 0, UserHandle.USER_CURRENT) == 1;
-
             notificationsHeight = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.LOCKSCREEN_NOTIFICATIONS_HEIGHT,
                     notificationsHeight, UserHandle.USER_CURRENT);
@@ -175,12 +167,6 @@ public class NotificationViewManager {
         if (mLockPatternUtils.isSecure() && shakeSecureEnabled && securityBypassed) {
             return false;
         } else if (mLockPatternUtils.isSecure()) {
-        boolean privacyModeEnabled = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE, 1, UserHandle.USER_CURRENT) == 1;
-
-        if (mLockPatternUtils.isSecure() && shakeSecureEnabled && securityBypassed) {
-            return false;
-        } else if (mLockPatternUtils.isSecure() && privacyModeEnabled){
             return true;
         } else {
             return false;
