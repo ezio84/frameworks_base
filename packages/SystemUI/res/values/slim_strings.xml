@@ -158,82 +158,13 @@
     <!-- Navigation bar IME navigation -->
     <string name="accessibility_ime_navigation_left">Cursor left</string>
     <string name="accessibility_ime_navigation_right">Cursor right</string>
-<<<<<<< HEAD
-
 
     <!-- Heads up -->
     <string name="status_bar_notification_heads_up_enable_title">Enable heads up</string>
     <string name="status_bar_notification_heads_up_disable_title">Disable heads up</string>
     <string name="heads_up_snooze_message">Heads up is disabled for <xliff:g id="number">%d</xliff:g> minutes.</string>
 
-
-    <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activated</string>
-    <string name="onthego_notif_title">On-The-Go is active</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Options</string>
-    <string name="onthego_notif_error">Unable to start On-The-Go</string>
-    <string name="onthego_notif_restart">Restart On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
-
-    <string name="network_4G">4G/LTE</string>
-    <string name="network_3G_only">3G Only</string>
-    <string name="network_3G_auto">2G/3G Auto</string>
-    <string name="network_3G">2G/3G Pref</string>
-    <string name="network_2G">2G Only</string>
-
-    <!-- battery saver mode -->
-    <string name="battery_saver_start">Battery Saver Enabled</string>
-    <string name="battery_saver_stop">Battery Saver Disabled</string>
-    <string name="battery_saver_change">Battery Saver Change network to</string>
-    <string name="battery_saver_network">Network restored</string>
-    <string name="battery_saver_data">Mobile data restored</string>
-    <string name="battery_saver_brightness">Screen Brightness restored</string>
-    <string name="battery_saver_bluetooth">Bluetooth restored</string>
-    <string name="battery_saver_location">Gps restored</string>
-    <string name="battery_saver_wifi">Wi-Fi restored</string>
-    <string name="battery_saver_cpu">CPU restored</string>
-    <string name="battery_saver_cpu_change">Battery Saver Change CPU freq to</string>
-    <string name="battery_saver_sync">Sync restored</string>
-    <string name="battery_saver_led">LED restored</string>
-    <string name="battery_saver_vibrate">Vibrate restored</string>
-    <string name="battery_saver_no_changes">No configuration restored</string>
-    <string name="battery_saver_all">All configuration restored</string>
-    <string name="battery_saver_enable_ticker">Battery saver mode running...</string>
-    <string name="battery_saver_enable_title">Battery saver mode</string>
-    <string name="battery_saver_airplane_ticker">Airplane mode enabled by battery saver</string>
-    <string name="battery_saver_airplane_text">Airplane mode enabled by battery saver because there is no signal after 5 minutes</string>
-    <string name="battery_saver_disable">Disable</string>
-
-    <!-- Development shortcut -->
-    <string name="advanced_dev_option_wipe_app">Wipe app data</string>
-    <string name="advanced_dev_option_force_stop">Force stop</string>
-
-    <!-- Hide notification icons -->
-    <string name="status_bar_notification_hide_icon_packages">Hide status bar app\'s notification icon(s)</string>
-
-    <!-- Content description of the halo button in the notification panel for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_halo">Create notification halo.</string>
-
-    <!-- HALO -->
-    <string name="halo_dismiss">Dismiss notification</string>
-    <string name="halo_hide">Hide</string>
-    <string name="halo_clear_all">Dismiss all notifications</string>
-    <string name="halo_silence">Hide &amp; silence until woken</string>
-    <string name="halo_tutorial1">This is HALO</string>
-    <string name="halo_tutorial2">Move me: double tap &amp; drag</string>
-    <string name="halo_tutorial3">Browse tasks: Horizontal drag</string>
-=======
->>>>>>> 93b53b0... FW:Notifications Cleanup need with previous FW notif original commit
-
     <!-- Title shown in notification popup for launching notification in floating mode -->
     <string name="status_bar_notification_floating_item_title">Floating mode</string>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 93b53b0... FW:Notifications Cleanup need with previous FW notif original commit
 </resources>
