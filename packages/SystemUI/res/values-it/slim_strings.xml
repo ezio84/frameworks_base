@@ -176,4 +176,7 @@
     <string name="status_bar_network_stats_color_title">Colore testo indicatori</string>
     <string name="status_bar_network_stats_color_summary">Modifica il colore del testo degli indicatori nella barra di stato</string>
 
+    <!-- Title shown in notification popup for launching notification in floating mode -->
+    <string name="status_bar_notification_floating_item_title">Modalità Floating</string>
+
 </resources>
