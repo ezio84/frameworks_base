@@ -61,7 +61,6 @@ public class PhoneStatusBarView extends PanelBar {
     private final PhoneStatusBarTransitions mBarTransitions;
     private GestureDetector mDoubleTapGesture;
     private boolean mDoubeTapGestureEnabled;
-    private boolean mConfigDoubleTapGestureEnabled;
 
     public PhoneStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -77,11 +76,6 @@ public class PhoneStatusBarView extends PanelBar {
         }
         mFullWidthNotifications = mSettingsPanelDragzoneFrac <= 0f;
         mBarTransitions = new PhoneStatusBarTransitions(this);
-
-        mConfigDoubleTapGestureEnabled = !mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_disableDoubleTapSleepGesture);
-
-        mDoubeTapGestureEnabled = getDoubleTapGestureSetting();
 
         mDoubleTapGesture = new GestureDetector(mContext,
                 new GestureDetector.SimpleOnGestureListener() {
@@ -121,6 +115,7 @@ public class PhoneStatusBarView extends PanelBar {
             mAttached = true;
             mSettingsObserver = new SettingsObserver(new Handler());
             mSettingsObserver.observe();
+            mSettingsObserver.onChange(true);
         }
     }
 
@@ -322,14 +317,6 @@ public class PhoneStatusBarView extends PanelBar {
 
     }
 
-    private boolean getDoubleTapGestureSetting() {
-        return Settings.System.getIntForUser(
-                mContext.getContentResolver(),
-                Settings.System.STATUSBAR_DOUBLE_TAP_GESTURE,
-                mConfigDoubleTapGestureEnabled ? 1 : 0,
-                UserHandle.USER_CURRENT) == 1;
-    }
-
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -345,7 +332,13 @@ public class PhoneStatusBarView extends PanelBar {
 
         @Override
         public void onChange(boolean selfChange) {
-            mDoubeTapGestureEnabled = getDoubleTapGestureSetting();
+            boolean mConfigDoubleTapGestureEnabled = !mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_disableDoubleTapSleepGesture);
+            mDoubeTapGestureEnabled = Settings.System.getIntForUser(
+                mContext.getContentResolver(),
+                Settings.System.STATUSBAR_DOUBLE_TAP_GESTURE,
+                mConfigDoubleTapGestureEnabled ? 1 : 0,
+                UserHandle.USER_CURRENT) == 1;
         }
     }
 }
