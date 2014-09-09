@@ -69,7 +69,6 @@
     <string name="chamber_name_message">Nombre del acceso directo que se mostrará junto al icono.</string>
     <string name="chamber_name_toast">Se usará el nombre predeterminado</string>
 
-
     <!-- Quick Settings -->
     <string name="quick_settings_gps">GPS</string>
     <string name="quick_settings_gps_off">GPS apagado</string>
@@ -155,18 +154,12 @@
     <string name="accessibility_ime_navigation_left">Cursor izquierda</string>
     <string name="accessibility_ime_navigation_right">Cursor derecha</string>
 
-
     <!-- Heads up -->
     <string name="status_bar_notification_heads_up_enable_title">Habilitar "heads up"</string>
     <string name="status_bar_notification_heads_up_disable_title">Deshabilitar "heads up"</string>
     <string name="heads_up_snooze_message">Heads up deshabilitado durante <xliff:g id="number">%d</xliff:g> minutos.</string>
 
-
-  
-
-
     <!-- Title shown in notification popup for launching notification in floating mode -->
     <string name="status_bar_notification_floating_item_title">Modo flotante</string>
-
 
 </resources>
