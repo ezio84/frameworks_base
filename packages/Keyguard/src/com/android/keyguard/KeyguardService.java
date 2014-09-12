@@ -23,6 +23,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Debug;
