@@ -158,7 +158,6 @@ public abstract class BaseStatusBar extends SystemUI implements
     private long mHeadsUpSnoozeStartTime;
     protected String mHeadsUpPackageName;
     protected boolean mShowHeadsUpUpdates;
-    private int mHeadsUpTextColor;
 
     protected IDreamManager mDreamManager;
     PowerManager mPowerManager;
@@ -850,8 +849,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected void onShowSearchPanel() {
     }
 
-    public boolean inflateViews(NotificationData.Entry entry,
-            ViewGroup parent, int customTextColor) {
+    public boolean inflateViews(NotificationData.Entry entry, ViewGroup parent) {
         int minHeight =
                 mContext.getResources().getDimensionPixelSize(R.dimen.notification_min_height);
         int maxHeight =
@@ -859,29 +857,8 @@ public abstract class BaseStatusBar extends SystemUI implements
         StatusBarNotification sbn = entry.notification;
         RemoteViews contentView = sbn.getNotification().contentView;
         RemoteViews bigContentView = sbn.getNotification().bigContentView;
-        mHeadsUpTextColor = customTextColor;
         if (contentView == null) {
             return false;
-        }
-        if (mHeadsUpTextColor != 0) {
-            if (contentView != null) {
-                contentView.setTextColor(com.android.internal.R.id.title, mHeadsUpTextColor);
-                contentView.setTextColor(com.android.internal.R.id.text, mHeadsUpTextColor);
-                contentView.setTextColor(com.android.internal.R.id.big_text, mHeadsUpTextColor);
-                contentView.setTextColor(com.android.internal.R.id.time, mHeadsUpTextColor);
-//                contentView.setTextColor(com.android.internal.R.id.action0, mHeadsUpTextColor);
-                contentView.setTextColor(com.android.internal.R.id.text2, mHeadsUpTextColor);
-                contentView.setTextColor(com.android.internal.R.id.info, mHeadsUpTextColor);
-            }
-            if (bigContentView != null) {
-                bigContentView.setTextColor(com.android.internal.R.id.title, mHeadsUpTextColor);
-                bigContentView.setTextColor(com.android.internal.R.id.text, mHeadsUpTextColor);
-                bigContentView.setTextColor(com.android.internal.R.id.big_text, mHeadsUpTextColor);
-                bigContentView.setTextColor(com.android.internal.R.id.time, mHeadsUpTextColor);
-//                bigContentView.setTextColor(com.android.internal.R.id.action0, mHeadsUpTextColor);
-                bigContentView.setTextColor(com.android.internal.R.id.text2, mHeadsUpTextColor);
-                bigContentView.setTextColor(com.android.internal.R.id.info, mHeadsUpTextColor);
-            }
         }
 
         // create the row view
@@ -1091,7 +1068,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         }
         // Construct the expanded view.
         NotificationData.Entry entry = new NotificationData.Entry(key, notification, iconView);
-        if (!inflateViews(entry, mPile, 0)) {
+        if (!inflateViews(entry, mPile)) {
             handleNotificationError(key, notification, "Couldn't expand RemoteViews for: "
                     + notification);
             return null;
