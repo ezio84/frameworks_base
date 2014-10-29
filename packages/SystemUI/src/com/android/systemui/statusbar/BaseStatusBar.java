@@ -543,17 +543,19 @@ public abstract class BaseStatusBar extends SystemUI implements
                             startApplicationDetailsActivity(packageNameF);
                             animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
 
-
                         } else if (item.getItemId() == MENU_HEADS_UP_ID) {
                             mPm.setHeadsUpSetting(packageNameF, !isHeadsUp);
 
-                        
-
-
                         } else if (item.getItemId() == R.id.notification_floating_item) {
-                            launchFloating(contentIntent);
-                            animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
-
+                                if (contentIntent == null) {
+                                    String text = mContext.getResources().getString(R.string.status_bar_floating_no_interface);
+                                    int duration = Toast.LENGTH_SHORT;
+                                    animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
+                                    Toast.makeText(mContext, text, duration).show();
+                                } else {
+                                    launchFloating(contentIntent);
+                                    animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_NONE);
+                                }
                         } else {
                             return false;
                         }
