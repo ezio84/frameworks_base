@@ -85,7 +85,7 @@ import com.android.internal.util.slim.PolicyHelper;
 import com.android.internal.util.slim.SlimActions;
 
 /**
- * Needed for takeScreenshot and takeScreenrecord
+ * Needed for takeScreenrecord
  */
 import android.content.ServiceConnection;
 import android.content.ComponentName;
@@ -251,6 +251,33 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         }
         mItems = new ArrayList<Action>();
 
+        // next: screen record, if enabled
+        if (mShowScreenRecord) {
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SCREENRECORD_IN_POWER_MENU, 0) != 0) {
+                mItems.add(
+                    new SinglePressAction(com.android.internal.R.drawable.ic_lock_screen_record,
+                            R.string.global_action_screenrecord) {
+
+                        public void onPress() {
+                            takeScreenrecord();
+                        }
+
+                        public boolean onLongPress() {
+                            return false;
+                        }
+
+                        public boolean showDuringKeyguard() {
+                            return true;
+                        }
+
+                        public boolean showBeforeProvisioning() {
+                            return true;
+                        }
+                    });
+                }
+        }
+
         // bug report, if enabled
         if (Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.BUGREPORT_IN_POWER_MENU, 0) != 0 && isCurrentUserOwner()) {
@@ -362,31 +389,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                             return true;
                         }
                     });
-            // next: screen record, if enabled
-            } else if (mShowScreenRecord) {
-                       if (Settings.System.getInt(mContext.getContentResolver(),
-                               Settings.System.SCREENRECORD_IN_POWER_MENU, 0) != 0) {
-                           mItems.add(
-                               new SinglePressAction(com.android.internal.R.drawable.ic_lock_screen_record,
-                                       R.string.global_action_screenrecord) {
-
-                        public void onPress() {
-                            takeScreenrecord();
-                        }
-
-                        public boolean onLongPress() {
-                            return false;
-                        }
-
-                        public boolean showDuringKeyguard() {
-                            return true;
-                        }
-
-                        public boolean showBeforeProvisioning() {
-                            return true;
-                        }
-                    });
-                }
             // airplane mode
             } else if (config.getClickAction().equals(PolicyConstants.ACTION_AIRPLANE)) {
                 constructAirPlaneModeToggle(PolicyHelper.getPowerMenuIconImage(mContext,
