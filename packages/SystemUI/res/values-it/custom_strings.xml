@@ -17,18 +17,18 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Screenrecord Notification Ticker -->
-    <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+    <string name="screenrecord_notif_ticker">Lo schermo verrà registrato</string>
 
     <!-- Screenrecord notification title -->
-    <string name="screenrecord_notif_title">Recording screen</string>
+    <string name="screenrecord_notif_title">Registrazione schermo in corso</string>
 
     <!-- Screenrecord notification action: Stop -->
     <string name="screenrecord_notif_stop">Stop</string>
 
     <!-- Screenrecord notification action: show/hide pointer -->
-    <string name="screenrecord_notif_pointer_on">Show pointer</string>
-    <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+    <string name="screenrecord_notif_pointer_on">Mostra puntatore</string>
+    <string name="screenrecord_notif_pointer_off">Nascondi puntatore</string>
 
     <!-- Screen record notification error title -->
-    <string name="screenrecord_notif_error">Unable to record screen</string>
+    <string name="screenrecord_notif_error">Impossibile registrare lo schermo</string>
 </resources>

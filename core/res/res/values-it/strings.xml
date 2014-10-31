@@ -1665,4 +1665,6 @@
   </plurals>
     <string name="restr_pin_try_later" msgid="973144472490532377">"Riprova più tardi"</string>
     <string name="immersive_mode_confirmation" msgid="7227416894979047467">"Scorri dall\'alto verso il basso per uscire dalla modalità schermo intero."</string>
+    <!-- label for item that takes screenrecord in the phone options dialog -->
+    <string name="global_action_screenrecord">Registra schermo</string>
 </resources>
