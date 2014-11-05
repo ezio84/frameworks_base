@@ -171,7 +171,7 @@ class GlobalScreenrecord {
         Notification.Builder builder = new Notification.Builder(mContext)
             .setTicker(r.getString(R.string.screenrecord_notif_ticker))
             .setContentTitle(r.getString(R.string.screenrecord_notif_title))
-            .setSmallIcon(R.drawable.ic_sysbar_camera)
+            .setSmallIcon(R.drawable.ic_sysbar_screenrec)
             .setWhen(System.currentTimeMillis())
             .setOngoing(true);
 
