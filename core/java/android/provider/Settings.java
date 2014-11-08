@@ -2603,12 +2603,6 @@ public final class Settings {
          */
         public static final String BATTERY_LIGHT_FULL_COLOR = "battery_light_full_color";
 
-        /**
-         * Show ScreenRecord in Power Menu
-         * @hide
-         */
-        public static final String SCREENRECORD_IN_POWER_MENU = "screenrecord_in_power_menu";
-
         /** Sprint MWI Quirk: Show message wait indicator notifications
          * @hide
          */
