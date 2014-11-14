@@ -159,7 +159,4 @@
     <string name="status_bar_notification_heads_up_disable_title">Deshabilitar "heads up"</string>
     <string name="heads_up_snooze_message">Heads up deshabilitado durante <xliff:g id="number">%d</xliff:g> minutos.</string>
 
-    <!-- Title shown in notification popup for launching notification in floating mode -->
-    <string name="status_bar_notification_floating_item_title">Modo flotante</string>
-
 </resources>
