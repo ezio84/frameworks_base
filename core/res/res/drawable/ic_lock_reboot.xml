@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 SlimRoms Project
+<!-- Copyright (C) 2014 DarkKat
+>>>>>>> 3148671... Add dark themes for dialogs and alert dialogs::core/res/res/drawable/ic_lock_reboot_dark.xml
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,4 +17,4 @@
 
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/ic_lock_reboot_alpha"
-    android:tint="?attr/colorControlNormal" />
+    android:tint="@*android:color/global_actions_icon_color_normal" />
