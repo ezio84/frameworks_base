@@ -2851,7 +2851,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 awakenDreams();
                 sendCloseSystemWindows(SYSTEM_DIALOG_REASON_HOME_KEY);
                 hideRecentApps(false, true);
-            } else {
+            } else if (mScreenOnFully) {
+                // check if screen is fully on before going home
+                // to avoid hardware home button wake going home
                 // Otherwise, just launch Home
                 sendCloseSystemWindows(SYSTEM_DIALOG_REASON_HOME_KEY);
                 startDockOrHome();
@@ -4490,7 +4492,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                                 break;
                             }
                         }
-                        if (!isScreenOn() && !mVolumeWakeScreen) {
+                        if (!isWakeKey) {
                             // If we aren't passing to the user and no one else
                             // handled it send it to the session manager to figure
                             // out.
@@ -4535,11 +4537,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KeyEvent.KEYCODE_POWER: {
                 result &= ~ACTION_PASS_TO_USER;
                 if (down) {
-                    boolean panic = mImmersiveModeConfirmation.onPowerKeyDown(interactive,
-                            SystemClock.elapsedRealtime(), isImmersiveMode(mLastSystemUiFlags));
-                    if (panic && !PolicyControl.isImmersiveFiltersActive()) {
-                        mHandler.post(mRequestTransientNav);
-                    }
                     if (interactive && !mPowerKeyTriggered
                             && (event.getFlags() & KeyEvent.FLAG_FALLBACK) == 0) {
                         mPowerKeyTriggered = true;
