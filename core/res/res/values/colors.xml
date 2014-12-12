@@ -18,6 +18,8 @@
 */
 -->
 <resources>
+    <color name="material_blue_grey">#ff1b1f23</color>
+    <drawable name="material_bg_blue_grey">@color/material_blue_grey</drawable>
     <drawable name="screen_background_light">#ffffffff</drawable>
     <drawable name="screen_background_dark">#ff000000</drawable>
     <drawable name="status_bar_closed_default_background">#ff000000</drawable>
