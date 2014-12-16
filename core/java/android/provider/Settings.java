@@ -5306,6 +5306,12 @@ public final class Settings {
                 "usb_audio_automatic_routing_disabled";
 
         /**
+          * Whether to allow killing of the foreground app by long-pressing the Back button
+          * @hide
+          */
+        public static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
+
+        /**
          * The timeout in milliseconds before the device fully goes to sleep after
          * a period of inactivity.  This value sets an upper bound on how long the device
          * will stay awake or dreaming without user activity.  It should generally
