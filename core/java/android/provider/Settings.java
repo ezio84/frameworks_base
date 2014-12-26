@@ -3101,6 +3101,12 @@ public final class Settings {
         public static final String STATUS_BAR_POWER_MENU = "status_bar_power_menu";
 
         /**
+         * Recents Show/Hide Search Bar
+         * @hide
+         */
+        public static final String RECENTS_SHOW_HIDE_SEARCH_BAR = "recents_show_hide_search_bar";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
