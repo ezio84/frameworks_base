@@ -2073,13 +2073,4 @@
   <java-symbol type="string" name="whichHomeApplicationNamed" />
   <java-symbol type="bool" name="config_sms_force_7bit_encoding" />
   <java-symbol type="array" name="config_sms_convert_destination_number_support" />
-
-  <!-- Themes and styles -->
-  <java-symbol type="style" name="Theme.Material.Dialog.Dark" />
-  <java-symbol type="style" name="Theme.Material.Dialog.Alert.Dark" />
-  <java-symbol type="style" name="TextAppearance.Material.Large.Dark" />
-  <java-symbol type="style" name="TextAppearance.Material.Small.Dark" />
-  <java-symbol type="drawable" name="material_bg_blue_grey" />
-  <java-symbol type="color" name="material_blue_grey" />
-
 </resources>
