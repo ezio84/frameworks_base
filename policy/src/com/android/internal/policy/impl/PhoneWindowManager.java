@@ -1182,10 +1182,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         + deviceKeyHandlerLib, e);
             }
         }
-
-        // power menu register broadcast receiver for power menu intent
-        mPowerMenuReceiver = new PowerMenuReceiver(context);
-        mPowerMenuReceiver.registerSelf();
     }
 
     /**
@@ -6300,38 +6296,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
         if (mOrientationListener != null) {
             mOrientationListener.dump(pw, prefix);
-        }
-    }
-
-    private PowerMenuReceiver mPowerMenuReceiver;
-    class PowerMenuReceiver extends BroadcastReceiver {
-        private boolean mIsRegistered = false;
-
-        public PowerMenuReceiver(Context context) {
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            if (action.equals(Intent.ACTION_POWER_MENU)) {
-                showGlobalActionsInternal();
-            }
-        }
-
-        private void registerSelf() {
-            if (!mIsRegistered) {
-                mIsRegistered = true;
-                IntentFilter filter = new IntentFilter();
-                filter.addAction(Intent.ACTION_POWER_MENU);
-                mContext.registerReceiver(mPowerMenuReceiver, filter);
-            }
-        }
-
-        private void unregisterSelf() {
-            if (mIsRegistered) {
-                mIsRegistered = false;
-                mContext.unregisterReceiver(this);
-            }
         }
     }
 }
