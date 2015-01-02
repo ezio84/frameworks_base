@@ -2132,6 +2132,19 @@ public final class Settings {
          */
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
 
+        /*
+         * List of QS tile names
+         * @hide
+         */
+        public static final String QS_TILES = "sysui_qs_tiles";
+
+        /**
+         * Use "main" tiles on the first row of the quick settings panel
+         * 0 = no, 1 = yes
+         * @hide
+         */
+        public static final String QS_USE_MAIN_TILES = "sysui_qs_main_tiles";
+
         /**
          * Whether to control brightness from status bar
          *
