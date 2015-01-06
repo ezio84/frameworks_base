@@ -450,7 +450,6 @@ final class ColorFade {
         if (!attachEglContext()) {
             return false;
         }
-
         try {
             if (!mTexNamesGenerated) {
                 GLES20.glGenTextures(1, mTexNames, 0);
