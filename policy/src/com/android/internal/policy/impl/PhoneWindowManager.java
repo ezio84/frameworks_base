@@ -663,9 +663,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Global.POLICY_CONTROL), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NAVIGATION_BAR_HEIGHT), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ACCELEROMETER_ROTATION_ANGLES), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1344,21 +1341,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mWakeGestureEnabledSetting = wakeGestureEnabledSetting;
                 updateWakeGestureListenerLp();
             }
-
-            // navigation bar custom height
-            int  mNavigationBarHeight = Settings.System.getInt(resolver,
-                    Settings.System.NAVIGATION_BAR_HEIGHT, 48);
-            mNavigationBarHeightForRotation[mPortraitRotation] =
-            mNavigationBarHeightForRotation[mUpsideDownRotation] =
-                    mNavigationBarHeight * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
-            mNavigationBarHeightForRotation[mLandscapeRotation] =
-            mNavigationBarHeightForRotation[mSeascapeRotation] =
-                    mNavigationBarHeight * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
-            mNavigationBarWidthForRotation[mPortraitRotation] =
-            mNavigationBarWidthForRotation[mUpsideDownRotation] =
-            mNavigationBarWidthForRotation[mLandscapeRotation] =
-            mNavigationBarWidthForRotation[mSeascapeRotation] =
-                (mNavigationBarHeight - 6) * DisplayMetrics.DENSITY_DEVICE/DisplayMetrics.DENSITY_DEFAULT;
 
             // Configure rotation lock.
             int userRotation = Settings.System.getIntForUser(resolver,
