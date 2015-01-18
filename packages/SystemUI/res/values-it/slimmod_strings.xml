@@ -52,4 +52,7 @@
     <string name="quick_settings_reboot_label">Riavvio</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
 
+    <string name="left_shortcut_hint">Scorri a destra per %1$s</string>
+    <string name="right_shortcut_hint">Scorri a sinistra per %1$s</string>
+
 </resources>
