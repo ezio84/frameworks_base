@@ -30,6 +30,7 @@ import android.graphics.RectF;
 import android.hardware.input.InputManager;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -70,7 +71,9 @@ public class KeyButtonView extends ImageView {
     private boolean mSupportsLongpress = true;
     private AudioManager mAudioManager;
     private Animator mAnimateToQuiescent = new ObjectAnimator();
+    private KeyButtonRipple mRipple;
 
+    private PowerManager mPm;
     private boolean mPerformedLongClick;
 
     private final Runnable mCheckLongPress = new Runnable() {
@@ -111,7 +114,8 @@ public class KeyButtonView extends ImageView {
         setClickable(true);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        setBackground(new KeyButtonRipple(context, this));
+        setBackground(mRipple = new KeyButtonRipple(context, this));
+        mPm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
     }
 
     @Override
@@ -204,6 +208,9 @@ public class KeyButtonView extends ImageView {
                 break;
             case MotionEvent.ACTION_CANCEL:
                 setPressed(false);
+                // hack to fix ripple getting stuck. exitHardware() starts an animation,
+                // but sometimes does not finish it.
+                mRipple.exitSoftware();
                 if (mCode != 0) {
                     sendEvent(KeyEvent.ACTION_UP, KeyEvent.FLAG_CANCELED);
                 }
