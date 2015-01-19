@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.util.Log;
 
@@ -230,14 +229,26 @@ public class QSTileHost implements QSTile.Host {
     private void recreateTiles() {
         if (DEBUG) Log.d(TAG, "Recreating tiles");
         final List<String> tileSpecs = loadTileSpecs();
-        for (QSTile oldTile : mTiles.values()) {
-            oldTile.destroy();
+        for (Map.Entry<String, QSTile<?>> tile : mTiles.entrySet()) {
+            if (!tileSpecs.contains(tile.getKey())) {
+                if (DEBUG) Log.d(TAG, "Destroying tile: " + tile.getKey());
+                tile.getValue().destroy();
+            }
         }
         final LinkedHashMap<String, QSTile<?>> newTiles = new LinkedHashMap<>();
         for (String tileSpec : tileSpecs) {
-            newTiles.put(tileSpec, createTile(tileSpec));
+            if (mTiles.containsKey(tileSpec)) {
+                newTiles.put(tileSpec, mTiles.get(tileSpec));
+            } else {
+                if (DEBUG) Log.d(TAG, "Creating tile: " + tileSpec);
+                try {
+                    newTiles.put(tileSpec, createTile(tileSpec));
+                } catch (Throwable t) {
+                    Log.w(TAG, "Error creating tile for spec: " + tileSpec, t);
+                }
+            }
         }
-
+        if (mTiles.equals(newTiles)) return;
         mTiles.clear();
         mTiles.putAll(newTiles);
         if (mCallback != null) {
@@ -266,7 +277,6 @@ public class QSTileHost implements QSTile.Host {
         final String defaultTileList = res.getString(R.string.quick_settings_tiles_default);
         String tileList = Secure.getStringForUser(mContext.getContentResolver(), TILES_SETTING,
                 mUserTracker.getCurrentUserId());
-        if (DEBUG) Log.d(TAG, "Config string: " + tileList);
         if (tileList == null) {
             tileList = res.getString(R.string.quick_settings_tiles);
             if (DEBUG) Log.d(TAG, "Loaded tile specs from config: " + tileList);
@@ -302,9 +312,6 @@ public class QSTileHost implements QSTile.Host {
                 mContext.getContentResolver().unregisterContentObserver(this);
             }
             mContext.getContentResolver().registerContentObserver(Secure.getUriFor(TILES_SETTING),
-                    false, this, mUserTracker.getCurrentUserId());
-            mContext.getContentResolver().registerContentObserver(
-                    Secure.getUriFor(Settings.Secure.QS_USE_MAIN_TILES),
                     false, this, mUserTracker.getCurrentUserId());
             mRegistered = true;
         }
