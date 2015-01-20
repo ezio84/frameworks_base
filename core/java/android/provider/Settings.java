@@ -3123,6 +3123,12 @@ public final class Settings {
          */
         public static final String VOLUME_MUSIC_CONTROLS = "volume_music_controls";
 
+	/**
+	 * Clear Recents in navbar enabler
+         * @hide
+         */
+        public static final String CLEAR_ALL_RECENTS_NAVBAR_ENABLED = "clear_all_recents_navbar_enabled";
+
         /**
          * Enable statusbar double tap gesture on to put device to sleep
          * @hide
@@ -3146,6 +3152,12 @@ public final class Settings {
          * @hide
          */
         public static final String RECENTS_SHOW_HIDE_SEARCH_BAR = "recents_show_hide_search_bar";
+
+        /**
+         * Height of navigation bar buttons
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_HEIGHT = "navigation_bar_height";
 
         /**
          * Status bar battery %
