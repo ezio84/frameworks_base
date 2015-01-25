@@ -27,6 +27,8 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.android.internal.util.cm.QSConstants;
+import com.android.internal.util.cm.QSUtils;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
@@ -34,10 +36,12 @@ import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
+import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
+import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NotificationsTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.WifiTile;
@@ -232,7 +236,10 @@ public class QSTileHost implements QSTile.Host {
         }
         final LinkedHashMap<String, QSTile<?>> newTiles = new LinkedHashMap<>();
         for (String tileSpec : tileSpecs) {
-            newTiles.put(tileSpec, createTile(tileSpec));
+            QSTile<?> t = createTile(tileSpec);
+            if (t != null) {
+                newTiles.put(tileSpec, t);
+            }
         }
 
         mTiles.clear();
@@ -243,26 +250,52 @@ public class QSTileHost implements QSTile.Host {
     }
 
     private QSTile<?> createTile(String tileSpec) {
-        if (tileSpec.equals("wifi")) return new WifiTile(this);
-        else if (tileSpec.equals("bt")) return new BluetoothTile(this);
-        else if (tileSpec.equals("inversion")) return new ColorInversionTile(this);
-        else if (tileSpec.equals("cell")) return new CellularTile(this);
-        else if (tileSpec.equals("airplane")) return new AirplaneModeTile(this);
-        else if (tileSpec.equals("rotation")) return new RotationLockTile(this);
-        else if (tileSpec.equals("flashlight")) return new FlashlightTile(this);
-        else if (tileSpec.equals("location")) return new LocationTile(this);
-        else if (tileSpec.equals("cast")) return new CastTile(this);
-        else if (tileSpec.equals("hotspot")) return new HotspotTile(this);
-        else if (tileSpec.equals("notifications")) return new NotificationsTile(this);
-        else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
-        else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
+        if (tileSpec.startsWith(IntentTile.PREFIX)) {
+            return IntentTile.create(this, tileSpec);
+        }
+
+        // Ensure tile is supported on this device
+        if (!QSUtils.getAvailableTiles(mContext).contains(tileSpec)) {
+            return null;
+        }
+
+        switch (tileSpec) {
+            case QSConstants.TILE_WIFI:
+                return new WifiTile(this);
+            case QSConstants.TILE_BLUETOOTH:
+                return new BluetoothTile(this);
+            case QSConstants.TILE_INVERSION:
+                return new ColorInversionTile(this);
+            case QSConstants.TILE_CELLULAR:
+                return new CellularTile(this);
+            case QSConstants.TILE_AIRPLANE:
+                return new AirplaneModeTile(this);
+            case QSConstants.TILE_ROTATION:
+                return new RotationLockTile(this);
+            case QSConstants.TILE_FLASHLIGHT:
+                return new FlashlightTile(this);
+            case QSConstants.TILE_LOCATION:
+                return new LocationTile(this);
+            case QSConstants.TILE_CAST:
+                return new CastTile(this);
+            case QSConstants.TILE_HOTSPOT:
+                return new HotspotTile(this);
+            case QSConstants.TILE_NOTIFICATIONS:
+                return new NotificationsTile(this);
+            case QSConstants.TILE_NFC:
+                return new NfcTile(this);
+            case QSConstants.TILE_COMPASS:
+                return new CompassTile(this);
+            default:
+                throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
+        }
     }
 
     private List<String> loadTileSpecs() {
         final Resources res = mContext.getResources();
         final String defaultTileList = res.getString(R.string.quick_settings_tiles_default);
-        String tileList = Settings.System.getStringForUser(mContext.getContentResolver(),
-                Settings.System.QS_TILES, mUserTracker.getCurrentUserId());
+        String tileList = Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.QS_TILES);
         if (DEBUG) Log.d(TAG, "Config string: "+tileList);
         if (tileList == null) {
             tileList = res.getString(R.string.quick_settings_tiles);
@@ -299,10 +332,10 @@ public class QSTileHost implements QSTile.Host {
                 mContext.getContentResolver().unregisterContentObserver(this);
             }
             mContext.getContentResolver().registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.QS_TILES),
+                    Settings.Secure.getUriFor(Settings.Secure.QS_TILES),
                     false, this, mUserTracker.getCurrentUserId());
             mContext.getContentResolver().registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.QS_USE_MAIN_TILES),
+                    Settings.Secure.getUriFor(Settings.Secure.QS_USE_MAIN_TILES),
                     false, this, mUserTracker.getCurrentUserId());
             mRegistered = true;
         }
