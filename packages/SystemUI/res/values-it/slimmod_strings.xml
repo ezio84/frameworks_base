@@ -69,4 +69,22 @@
     <string name="accessibility_dpad_left">Cursore sinistra</string>
     <string name="accessibility_dpad_right">Cursore destra</string>
 
+    <!-- Navigation ring shortcuts -->
+    <string name="navigation_ring_title">Collegamenti rapidi anello</string>
+    <string name="navring_target_reset_message">Reimpostare la configurazione predefinita?</string>
+    <string name="navring_target_reset">Reimposta a default</string>
+    <string name="navring_action_open_ime_switcher">Apri switcher IME</string>
+    <string name="navring_action_kill_app">Termina app</string>
+    <string name="navring_action_none">Niente</string>
+    <string name="navring_action_take_screenshot">Screenshot</string>
+    <string name="navring_action_ring_vibrate">Suono/Vibrazione</string>
+    <string name="navring_action_ring_silent">Suono/Silenzioso</string>
+    <string name="navring_action_ring_vibrate_silent">Suono/Vibrazione/Silenzioso</string>
+    <string name="navring_action_screen_off">Spegni schermo</string>
+    <string name="navring_action_torch">Torcia</string>
+    <string name="navring_action_google_now">Google Now</string>
+    <string name="navring_choose_action_title">Scegli azione</string>
+    <string name="select_application">Seleziona applicazione</string>
+    <string name="lockscreen_target_empty">Vuoto</string>
+
 </resources>
