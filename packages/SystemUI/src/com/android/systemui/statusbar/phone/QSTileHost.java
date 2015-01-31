@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.NotificationsTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.ScreenTimeoutTile;
 import com.android.systemui.qs.tiles.VisualizerTile;
 import com.android.systemui.qs.tiles.WifiTile;
@@ -292,6 +293,8 @@ public class QSTileHost implements QSTile.Host {
                 return new VisualizerTile(this);
             case QSConstants.TILE_REBOOT:
                 return new RebootTile(this);
+            case QSConstants.TILE_SCREENSHOT:
+                return new ScreenshotTile(this);
             default:
                 throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
         }
