@@ -263,8 +263,7 @@ public class BatteryMeterView extends View implements DemoMode,
         }
 
         setMode(meterMode);
-        mShowPercent = showInsidePercent;
-        invalidateIfVisible();
+        setShowPercent(showInsidePercent);
     }
 
     public BatteryMeterView(Context context) {
@@ -377,6 +376,11 @@ public class BatteryMeterView extends View implements DemoMode,
                 invalidate();
             }
         }
+    }
+
+    public void setShowPercent(boolean show) {
+        mShowPercent = show;
+        invalidateIfVisible();
     }
 
     public void setMode(BatteryMeterMode mode) {
