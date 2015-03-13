@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ScreenTimeoutTile extends QSTile<ScreenTimeoutTile.TimeoutState> {
-    private static final Intent SETTINGS_INTENT = new Intent("android.settings.DISPLAY_SETTINGS");
+    private static final Intent SETTINGS_INTENT = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
     private static final String TIMEOUT_ENTRIES_NAME = "screen_timeout_entries";
     private static final String TIMEOUT_VALUES_NAME = "screen_timeout_values";
     private static final String SETTINGS_PACKAGE_NAME = "com.android.settings";
