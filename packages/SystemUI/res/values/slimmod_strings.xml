@@ -31,7 +31,6 @@
     <string name="accessibility_quick_settings_location_gps_only">Location reporting: sensors only mode.</string>
     <!-- Content description of the location tile in quick settings when on, high accuracy mode (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_location_high_accuracy">Location reporting: high accuracy mode.</string>
-
     <!-- QuickSettings: Location detail panel title [CHAR LIMIT=NONE] -->
     <string name="quick_settings_location_detail_title">Location mode</string>
     <!-- QuickSettings: Location (On, low-power) [CHAR LIMIT=NONE] -->
@@ -40,19 +39,24 @@
     <string name="quick_settings_location_gps_only_label">Device only</string>
     <!-- QuickSettings: Location (On, high-accuracy) [CHAR LIMIT=NONE] -->
     <string name="quick_settings_location_high_accuracy_label">High accuracy</string>
-
     <string name="quick_settings_screen_timeout_detail_title">Screen timeout</string>
-
     <string name="quick_settings_lockscreen_label">Lock screen</string>
-
     <string name="quick_settings_lte_tile_title">LTE</string>
-
     <string name="quick_settings_visualizer_label">AudioFX</string>
-
     <string name="quick_settings_reboot_label">Reboot</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
 
     <string name="quick_settings_screenshot">Screenshot</string>
+
+    <string name="quick_settings_brightness">Brightness</string>
+
+    <string name="quick_settings_usb_tether">USB tethering</string>
+
+    <string name="quick_settings_battery_saver">Battery saver</string>
+    <string name="quick_settings_battery_saver_off">Battery saver off</string>
+
+    <string name="quick_settings_expanded_desktop">Expanded</string>
+    <string name="quick_settings_expanded_desktop_off">Normal</string>
 
     <string name="left_shortcut_hint">Swipe right for %1$s</string>
     <string name="right_shortcut_hint">Swipe left for %1$s</string>
@@ -88,6 +92,7 @@
     <string name="navring_choose_action_title">Choose action</string>
     <string name="select_application">Select application</string>
     <string name="lockscreen_target_empty">Empty</string>
+
 
     <string name="clear_recents">Close all recent</string>
 
