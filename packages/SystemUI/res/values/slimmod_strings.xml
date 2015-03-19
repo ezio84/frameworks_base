@@ -89,4 +89,6 @@
     <string name="select_application">Select application</string>
     <string name="lockscreen_target_empty">Empty</string>
 
+    <string name="clear_recents">Close all recent</string>
+
 </resources>
