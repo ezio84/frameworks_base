@@ -522,5 +522,4 @@ public class SearchPanelView extends FrameLayout implements StatusBarPanel,
                     });
         }
     }
-
 }
