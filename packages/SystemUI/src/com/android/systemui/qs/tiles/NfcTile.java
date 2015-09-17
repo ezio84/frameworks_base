@@ -92,7 +92,7 @@ public class NfcTile extends QSTile<QSTile.BooleanState> {
         if (mNfcAdapter == null) {
             mNfcAdapter = NfcAdapter.getDefaultAdapter(mContext);
         }
-        state.visible = mNfcAdapter != null;
+        state.visible = true;
         state.value = mNfcAdapter != null && isEnabled();
         state.icon = state.value ? ResourceIcon.get(R.drawable.ic_qs_nfc_on)
                 : ResourceIcon.get(R.drawable.ic_qs_nfc_off);
